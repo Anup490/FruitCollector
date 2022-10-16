@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 public class ActorScript : MonoBehaviour
 {
     readonly float sensitivity = 20.0f;
-    readonly int maxTimeInSecs = 5;
+    readonly int maxTimeInSecs = 60;
 
     public bool isDead;
 
