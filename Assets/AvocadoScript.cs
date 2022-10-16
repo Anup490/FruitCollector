@@ -8,14 +8,14 @@ public class AvocadoScript : MonoBehaviour
     readonly string actorName = "Actor";
 
     bool hasStarted;
-    ActorInterface actorInterface;
+    GameModeScript gameMode;
     Material material;
     Vector3 boxPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        actorInterface = ActorInterface.Create();
+        gameMode = GetComponentInParent<GameModeScript>();
         MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
         material = mesh.materials[0];
         hasStarted = true;
@@ -26,7 +26,7 @@ public class AvocadoScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!actorInterface.pause)
+        if (gameMode != null && !gameMode.isPaused)
         {
             Transform transform = GetComponent<Transform>();
             transform.Rotate(0, 1, 0);

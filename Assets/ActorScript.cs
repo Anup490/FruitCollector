@@ -5,11 +5,13 @@ using UnityEngine.UIElements;
 public class ActorScript : MonoBehaviour
 {
     readonly float sensitivity = 20.0f;
-    readonly int maxTimeInSecs = 60;
+    readonly int maxTimeInSecs = 5;
 
+    public bool isDead;
+
+    GameModeScript gameMode;
     Animation walkanim;
     SkinnedMeshRenderer skinnedMeshRenderer;
-    ActorInterface actorInterface;
     Label scoreUI;
     Label timerUI;
     Label healthUI;
@@ -23,12 +25,11 @@ public class ActorScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameMode = GetComponentInParent<GameModeScript>();
         walkanim = GetComponentInChildren<Animation>();
         skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         InitUI();
         StartCoroutine(DelayAnimStop(0.1f));
-        UnityEngine.Cursor.visible = false;
-        actorInterface = ActorInterface.Create();
     }
 
     // Update is called once per frame
@@ -54,9 +55,6 @@ public class ActorScript : MonoBehaviour
             else
                 avocadoCount++;
         }
-        Rigidbody rb = collidedObject.GetComponent<Rigidbody>();
-        if (rb != null) 
-            StartCoroutine(ChangeColor());
     }
 
     private void InitUI()
@@ -138,7 +136,7 @@ public class ActorScript : MonoBehaviour
         StartCoroutine(ChangeColor());
         if (healthCount <= 0)
         {
-            actorInterface.dead = true;
+            isDead = true;
             if (messageUI != null)
             {
                 messageUI.visible = true;
@@ -174,13 +172,14 @@ public class ActorScript : MonoBehaviour
 
     private IEnumerator UpdateTimer()
     {
-        for (int i=maxTimeInSecs; i>=0; i--)
+        for (int i=maxTimeInSecs; i>0; i--)
         {
             timerUI.text = i.ToString();
             yield return new WaitForSeconds(1.0f);
         }
         if (messageUI != null)
         {
+            timerUI.text = "0";
             messageUI.visible = true;
             messageUI.text = "TIMER EXPIRED";
         }
@@ -189,11 +188,12 @@ public class ActorScript : MonoBehaviour
 
     private void EndGame()
     {
+        if (gameMode != null)
+            gameMode.PauseGame();
         if (gameoverUI != null)
             gameoverUI.visible = true;
-        UnityEngine.Cursor.visible = true;
-        if (walkanim.isPlaying) walkanim.Stop();
+        if (walkanim.isPlaying) 
+            walkanim.Stop();
         readyInputs = false;
-        actorInterface.pause = true;
     }
 }
