@@ -7,7 +7,6 @@ public class AvocadoScript : MonoBehaviour
 
     readonly string actorName = "Actor";
 
-    bool hasStarted;
     GameModeScript gameMode;
     Material material;
     Vector3 boxPosition;
@@ -18,7 +17,6 @@ public class AvocadoScript : MonoBehaviour
         gameMode = GetComponentInParent<GameModeScript>();
         MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
         material = mesh.materials[0];
-        hasStarted = true;
         boxPosition = transform.position;
         boxPosition.y += 0.5f;
     }
@@ -50,18 +48,12 @@ public class AvocadoScript : MonoBehaviour
         if (colliders.Length == 0)
             material.SetColor("_Color", Color.white);
         foreach (Collider collider in colliders)
-        {
-            if (actorName.Equals(collider.name))
-                material.SetColor("_Color", Color.black);
-            else
-                material.SetColor("_Color", Color.white);
-        }
+            material.SetColor("_Color", (actorName.Equals(collider.name))? Color.black: Color.white);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if (hasStarted)
-            Gizmos.DrawWireCube(boxPosition, transform.localScale);
+        Gizmos.DrawWireCube(boxPosition, transform.localScale);
     }
 }

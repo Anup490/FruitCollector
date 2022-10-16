@@ -20,12 +20,6 @@ public class GameModeScript : MonoBehaviour
         SpawnAvocados(20);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void SpawnAvocados(int count)
     {
         Transform transform = GetComponent<Transform>();
