@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class MenuHUD : MonoBehaviour
@@ -67,8 +68,8 @@ public class MenuHUD : MonoBehaviour
         foreach (object item in items)
         {
             string s = item as string;
-            if (s != null)
-                Debug.Log("Clicked item is :: " + s);
+            if (s.Equals("PLAY"))
+                SceneManager.LoadScene("SampleScene");
             if (s.Equals("EXIT"))
                 Application.Quit();
         }

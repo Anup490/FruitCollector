@@ -5,6 +5,6 @@
     <ui:Label text="0" display-tooltip-when-elided="true" name="TimerValue" style="max-width: 15px; left: 95%; position: absolute;" />
     <ui:Label text="GAME OVER" display-tooltip-when-elided="true" name="GameOverLabel" style="position: absolute; top: 50%; left: 25%; min-width: 50%; min-height: 50px; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 40px;" />
     <ui:Label text="Health: " display-tooltip-when-elided="true" name="HealthLabel" style="position: absolute; left: 45%;" />
-    <ui:Label text="100" display-tooltip-when-elided="true" name="HealthValue" style="position: absolute; left: 50%;" />
+    <ui:Label text="100" display-tooltip-when-elided="true" name="HealthValue" style="position: absolute; left: 50%; background-color: rgb(255, 255, 255); min-width: auto;" />
     <ui:Label text="Message" display-tooltip-when-elided="true" name="MessageValue" style="position: absolute; left: 40%; top: 60%; min-width: 20%; -unity-text-align: upper-center;" />
 </ui:UXML>

@@ -1,4 +1,5 @@
-﻿using UnityEngine.UIElements;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 class ActorHUD
 {
@@ -8,7 +9,7 @@ class ActorHUD
     Label gameoverUI;
     Label messageUI;
 
-    public ActorHUD(VisualElement ui)
+    public ActorHUD(VisualElement ui, int maxHealth)
     {
         if (ui != null)
         {
@@ -17,6 +18,11 @@ class ActorHUD
             healthUI = ui.Query<Label>("HealthValue").First();
             gameoverUI = ui.Query<Label>("GameOverLabel").First();
             messageUI = ui.Query<Label>("MessageValue").First();
+            if (healthUI != null)
+            {
+                IStyle healthUIStyle = healthUI.style;
+                healthUIStyle.minWidth = maxHealth;
+            }
             if (gameoverUI != null)
                 gameoverUI.visible = false;
             if (messageUI != null)
@@ -38,8 +44,17 @@ class ActorHUD
 
     public void UpdateHealth(int health)
     {
+        if (health < 0) return;
         if (healthUI != null)
+        {
             healthUI.text = health.ToString();
+            IStyle healthUIStyle = healthUI.style;
+            healthUIStyle.minWidth = health;
+            if (health == 0)
+                healthUIStyle.backgroundColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            else if (health < 50)
+                healthUIStyle.backgroundColor = Color.red;
+        }    
     }
 
     public void ShowGameOver(string message)

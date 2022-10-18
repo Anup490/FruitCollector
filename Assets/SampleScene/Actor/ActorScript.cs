@@ -21,7 +21,7 @@ public class ActorScript : MonoBehaviour
     {
         gameMode = GetComponentInParent<GameModeScript>();
         mesh = GetComponentInChildren<ActorMeshScript>();
-        hud = new ActorHUD(GetComponent<UIDocument>().rootVisualElement);
+        hud = new ActorHUD(GetComponent<UIDocument>().rootVisualElement, healthCount);
         StartCoroutine(UpdateTimer());
     }
 
