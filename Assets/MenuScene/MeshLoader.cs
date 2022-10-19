@@ -27,7 +27,7 @@ public class MeshLoader
     readonly Prefab[] prefabData = new Prefab[] 
     { 
         new Prefab("Assets/MenuScene/ActorPrefab.prefab", "Assets/SampleScene/Actor/ActorPrefab.prefab", new Vector3(9.7f, 42.125f, 28.25f), new Vector3(30.0f, -1.0f, 40.0f)), 
-        new Prefab("Assets/MenuScene/HeroPrefab.prefab", "Assets/SampleScene/Hero/HeroPrefab.prefab", new Vector3(0.0f,1.875f, -5.0f), new Vector3(0.0f, 0.0f, 0.0f)) 
+        new Prefab("Assets/MenuScene/HeroPrefab.prefab", "Assets/SampleScene/Hero/HeroPrefab.prefab", new Vector3(0.0f,1.875f, -5.0f), Vector3.zero) 
     };
     GameObject characterObject;
     GameObject[] prefabs;

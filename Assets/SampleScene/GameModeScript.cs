@@ -19,11 +19,6 @@ public class GameModeScript : MonoBehaviour
         hud.UpdateTimer(timer);
     }
 
-    public void UpdateHealth(int health)
-    {
-        hud.UpdateHealth(health);
-    }
-
     public void StopGame(string message)
     {
         hud.ShowGameOver(message);

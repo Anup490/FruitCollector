@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActorScript : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class ActorScript : MonoBehaviour
 
     GameModeScript gameMode;
     ActorMeshScript mesh;
+    Image healthBar;
 
     bool readyInputs = true;
     bool readyJump = true;
@@ -19,6 +21,7 @@ public class ActorScript : MonoBehaviour
     {
         gameMode = GetComponentInParent<GameModeScript>();
         mesh = GetComponentInChildren<ActorMeshScript>();
+        healthBar = GetComponentInChildren<Image>();
         StartCoroutine(UpdateTimer());
     }
 
@@ -81,7 +84,7 @@ public class ActorScript : MonoBehaviour
     {
         PushBack();
         healthCount -= 20;
-        gameMode.UpdateHealth(healthCount);
+        UpdateHealth();
         mesh.ShowDamage();
         if (healthCount <= 0)
         {
@@ -113,6 +116,17 @@ public class ActorScript : MonoBehaviour
         Rigidbody rb = GetComponent<Rigidbody>();
         Vector3 forward = rb.transform.forward;
         rb.AddForce(new Vector3(-forward.x * 30000.0f, (forward.y + 1.0f) * 15000.0f, -forward.z * 30000.0f));
+    }
+
+    private void UpdateHealth()
+    {
+        if (healthBar != null)
+        {
+            RectTransform rectTransform = healthBar.rectTransform;
+            float width = (healthCount * 2.0f) / 100.0f;
+            rectTransform.sizeDelta = new Vector2(width, 0.2f);
+            if (healthCount < 50) healthBar.color = Color.red;
+        }
     }
 
     private void EndGame(string message)

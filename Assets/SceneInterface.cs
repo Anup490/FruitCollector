@@ -14,5 +14,9 @@ public class SceneInterface
         return sceneInterface;
     }
 
-    private SceneInterface() {}
+    private SceneInterface() 
+    {
+        characterPath = "Assets/SampleScene/Hero/HeroPrefab.prefab";
+        displacement = Vector3.zero;
+    }
 }
