@@ -44,7 +44,7 @@ public class GameModeScript : MonoBehaviour
     {
         GameObject prefabPlayer = PrefabUtility.LoadPrefabContents(SceneInterface.Get().characterPath);
         Transform transform = GetComponent<Transform>();
-        Vector3 position = transform.position + SceneInterface.Get().displacement;// + new Vector3(30.0f, -1.0f, 40.0f);
+        Vector3 position = transform.position + SceneInterface.Get().displacement;
         Instantiate(prefabPlayer, position, transform.rotation, transform);
     }
 
