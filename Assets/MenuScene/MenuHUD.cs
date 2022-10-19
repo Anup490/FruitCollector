@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class MenuHUD : MonoBehaviour
 {
+    SceneInterface scene;
     VisualElement menu;
     ListView listView;
     List<string> menuList;
@@ -12,6 +13,7 @@ public class MenuHUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        scene = SceneInterface.Get();
         menu = GetComponent<UIDocument>().rootVisualElement;
         listView = menu.Q<ListView>("ListView");
         menuList = new List<string>();
@@ -69,7 +71,11 @@ public class MenuHUD : MonoBehaviour
         {
             string s = item as string;
             if (s.Equals("PLAY"))
+            {
+                scene.characterPath = MeshLoader.Get().selectedPrefabPath;
+                scene.displacement = MeshLoader.Get().selectedPrefabDisplacement;
                 SceneManager.LoadScene("SampleScene");
+            }
             if (s.Equals("EXIT"))
                 Application.Quit();
         }

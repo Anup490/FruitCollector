@@ -1,23 +1,51 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameModeScript : MonoBehaviour
 {
-    [SerializeField]
-    GameObject prefab;
+    [SerializeField] GameObject prefabAvocado;
 
     public bool isPaused;
+    HUD hud;
 
-    public void PauseGame()
+    public void UpdateScore(int score)
     {
-        Cursor.visible = true;
+        hud.UpdateScore(score);
+    }
+
+    public void UpdateTimer(int timer)
+    {
+        hud.UpdateTimer(timer);
+    }
+
+    public void UpdateHealth(int health)
+    {
+        hud.UpdateHealth(health);
+    }
+
+    public void StopGame(string message)
+    {
+        hud.ShowGameOver(message);
+        UnityEngine.Cursor.visible = true;
         isPaused = true;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
+        UnityEngine.Cursor.visible = false;
+        SpawnPlayer();
         SpawnAvocados(20);
+        hud = new HUD(GetComponent<UIDocument>().rootVisualElement);
+    }
+
+    private void SpawnPlayer()
+    {
+        GameObject prefabPlayer = PrefabUtility.LoadPrefabContents(SceneInterface.Get().characterPath);
+        Transform transform = GetComponent<Transform>();
+        Vector3 position = transform.position + SceneInterface.Get().displacement;// + new Vector3(30.0f, -1.0f, 40.0f);
+        Instantiate(prefabPlayer, position, transform.rotation, transform);
     }
 
     private void SpawnAvocados(int count)
@@ -27,7 +55,7 @@ public class GameModeScript : MonoBehaviour
         float originalX = position.x;
         for(int i=0; i<count; i++)
         {
-            AvocadoScript script = prefab.GetComponentInChildren<AvocadoScript>();
+            AvocadoScript script = prefabAvocado.GetComponentInChildren<AvocadoScript>();
             if (script != null)
                 script.isBomb = MakeBomb();
             if (i % 5 == 0 && i > 0)
@@ -35,7 +63,7 @@ public class GameModeScript : MonoBehaviour
                 position.z += 5.0f;
                 position.x = originalX;
             }
-            Instantiate(prefab, position, transform.rotation, transform);
+            Instantiate(prefabAvocado, position, transform.rotation, transform);
             position.x += 5.0f;
         }
     }

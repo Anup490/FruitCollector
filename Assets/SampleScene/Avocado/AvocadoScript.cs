@@ -6,6 +6,7 @@ public class AvocadoScript : MonoBehaviour
     public bool isBomb;
 
     readonly string actorName = "Actor";
+    readonly string heroName = "Hero";
 
     GameModeScript gameMode;
     Material material;
@@ -48,7 +49,9 @@ public class AvocadoScript : MonoBehaviour
         if (colliders.Length == 0)
             material.SetColor("_Color", Color.white);
         foreach (Collider collider in colliders)
-            material.SetColor("_Color", (actorName.Equals(collider.name))? Color.black: Color.white);
+        {
+            material.SetColor("_Color", (actorName.Equals(collider.name) || heroName.Equals(collider.name)) ? Color.black : Color.white);
+        }
     }
 
     private void OnDrawGizmos()

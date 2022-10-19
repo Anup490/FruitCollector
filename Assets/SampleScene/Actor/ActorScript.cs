@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class ActorScript : MonoBehaviour
 {
@@ -9,7 +8,6 @@ public class ActorScript : MonoBehaviour
 
     GameModeScript gameMode;
     ActorMeshScript mesh;
-    ActorHUD hud;
 
     bool readyInputs = true;
     bool readyJump = true;
@@ -21,7 +19,6 @@ public class ActorScript : MonoBehaviour
     {
         gameMode = GetComponentInParent<GameModeScript>();
         mesh = GetComponentInChildren<ActorMeshScript>();
-        hud = new ActorHUD(GetComponent<UIDocument>().rootVisualElement, healthCount);
         StartCoroutine(UpdateTimer());
     }
 
@@ -33,7 +30,7 @@ public class ActorScript : MonoBehaviour
             MoveForward(Input.GetAxis("Forward"));
             MoveCameraYaw(Input.GetAxis("Mouse X"));
             Jump(Input.GetAxis("Jump"));
-            hud.UpdateScore(avocadoCount);
+            gameMode.UpdateScore(avocadoCount);
         }
     }
 
@@ -84,7 +81,7 @@ public class ActorScript : MonoBehaviour
     {
         PushBack();
         healthCount -= 20;
-        hud.UpdateHealth(healthCount);
+        gameMode.UpdateHealth(healthCount);
         mesh.ShowDamage();
         if (healthCount <= 0)
         {
@@ -102,11 +99,11 @@ public class ActorScript : MonoBehaviour
 
     private IEnumerator UpdateTimer()
     {
-        hud.UpdateTimer(maxTimeInSecs);
+        gameMode.UpdateTimer(maxTimeInSecs);
         for (int i=maxTimeInSecs; i>=0; i--)
         {
             yield return new WaitForSeconds(1.0f);
-            hud.UpdateTimer(i);
+            gameMode.UpdateTimer(i);
         }
         EndGame("TIMER EXPIRED");
     }
@@ -121,8 +118,7 @@ public class ActorScript : MonoBehaviour
     private void EndGame(string message)
     {
         readyInputs = false;
-        hud.ShowGameOver(message);
-        gameMode.PauseGame();
+        gameMode.StopGame(message);
         mesh.PlayWalkAnim(false);
     }
 }
