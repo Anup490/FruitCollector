@@ -1,34 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
-class Prefab
-{
-    public string displayPath { get; }
-    public string actualPath { get; }
-    public Vector3 displayDisplacement { get; }
-    public Vector3 actualDisplacement { get; }
-
-    public Prefab(string displayPath, string actualPath, Vector3 displayDisplacement, Vector3 actualDisplacement)
-    {
-        this.displayPath = displayPath;
-        this.actualPath = actualPath;
-        this.displayDisplacement = displayDisplacement;
-        this.actualDisplacement = actualDisplacement;
-    }
-}
-
 public class MeshLoader
 {
+    public PrefabScriptableObject[] prefabData;
     public string selectedPrefabPath = "Assets/SampleScene/Actor/ActorPrefab.prefab";
     public Vector3 selectedPrefabDisplacement = new Vector3(30.0f, -1.0f, 40.0f);
 
     static MeshLoader loader;
 
-    readonly Prefab[] prefabData = new Prefab[] 
-    { 
-        new Prefab("Assets/MenuScene/ActorPrefab.prefab", "Assets/SampleScene/Actor/ActorPrefab.prefab", new Vector3(9.7f, 42.125f, 28.25f), new Vector3(30.0f, -1.0f, 40.0f)), 
-        new Prefab("Assets/MenuScene/HeroPrefab.prefab", "Assets/SampleScene/Hero/HeroPrefab.prefab", new Vector3(0.0f,1.875f, -5.0f), Vector3.zero) 
-    };
     GameObject characterObject;
     GameObject[] prefabs;
    
@@ -41,6 +21,10 @@ public class MeshLoader
 
     private MeshLoader() 
     {
+        prefabData = new PrefabScriptableObject[2];
+        prefabData[0] = AssetDatabase.LoadAssetAtPath("Assets/MenuScene/ActorPrefabData.asset", typeof(PrefabScriptableObject)) as PrefabScriptableObject;
+        prefabData[1] = AssetDatabase.LoadAssetAtPath("Assets/MenuScene/HeroPrefabData.asset", typeof(PrefabScriptableObject)) as PrefabScriptableObject;
+
         prefabs = new GameObject[prefabData.Length];
         characterObject = GameObject.Find("CharacterCam");
         if (characterObject != null)
