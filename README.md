@@ -1,6 +1,9 @@
 # FruitCollector
 A simple game where where the player is supposed to avoid bombs that look deceptively like the avocados and collect the actual avocados before the timer runs out.
 
+###### Demo:
+https://youtu.be/AD2O04Kz6Jg
+
 ###### Language: C#
 
 ###### Tools: Visual studio, Unity
